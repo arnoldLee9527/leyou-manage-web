@@ -174,15 +174,19 @@
 
         },
         deleteItem(oldBrand){
-          confirm("确定删除id为"+oldBrand.id+"，名称为"+oldBrand.name+"的商品吗？")
-          this.$http.delete("/item/brand/delete/"+oldBrand.id)
+
+          this.$message.confirm("确定删除id为"+oldBrand.id+"，名称为"+oldBrand.name+"的商品吗？")
             .then(()=>{
-              this.getDataFromServer();
-              this.$message.success("删除成功");
+              this.$http.delete("/item/brand/delete/"+oldBrand.id)
+                .then(()=>{
+                  this.getDataFromServer();
+                  this.$message.success("删除成功");
+                })
+                .catch(()=>{
+                  this.$message.error("删除失败")
+                })
             })
-            .catch(()=>{
-              this.$message.error("删除失败")
-            })
+
 
         }
       }
