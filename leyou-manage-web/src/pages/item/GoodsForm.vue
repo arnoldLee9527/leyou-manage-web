@@ -190,7 +190,7 @@ export default {
       // 处理sku
       const skus = this.skus
         .filter(s => s.enable)
-        .map(({ price, stock, enable, images, indexes, ...rest }) => {
+        .map(({ price, stock, enable, images, indexes,id, ...rest }) => {
           // 标题，在spu的title基础上，拼接特有规格属性值
           const title = goodsParams.title + " " + Object.values(rest).map(v => v.v).join(" ");
           const obj = {};
@@ -200,6 +200,7 @@ export default {
           return {
             price: this.$format(price), // 价格需要格式化
             stock,
+            id,
             indexes,
             enable,
             title, // 基本属性
@@ -343,10 +344,11 @@ export default {
                   // 如果是编辑，则回填sku信息
                   const sku = this.goods.skus.get(obj.indexes);
                   if (sku != null) {
-                    const { price, stock, enable, images } = sku;
+                    const { price, stock, enable, images, id } = sku;
                     Object.assign(obj, {
                       price: this.$format(price),
                       stock,
+                      id,
                       enable,
                       images: images ? images.split(",") : [],
                     });
